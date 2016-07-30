@@ -1,10 +1,10 @@
 <?php
-	require_once "configuration.php";
+	require_once(dirname(__FILE__).'/configuration.php');
 	header('Content-Type: application/json; charset=utf-8');
 	require("notificacoes/pdo.php");
 	if(isset($_GET['u']))
 	{
-		require_once("configuration.php");
+		require(dirname(__FILE__).'/notificacoes/pdo.php');
 		session_start();
 		if(!isset($_SESSION['tckid']))
 		{
