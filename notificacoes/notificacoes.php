@@ -4,12 +4,13 @@
 	$db = Database::conectar($db_host,$db_username,$db_password,$db_name);
 	$ql = $db->query("SELECT value FROM tblconfiguration WHERE setting='SystemURL' LIMIT 1;");
 	$rl = $ql->fetch();
+	$urls = str_replace("http:", "", str_replace("https:", "", $rl['value']));
 	if(isset($_GET['u']) && isset($_GET['e']))
 	{
 		echo "var md5cli = '".$_GET['u']."';";
 ?>
 $(document).ready(function() {
-	var icones = {ok:"<?=$rl['value']?>/notificacoes/ok.png", novo:"<?=$rl['value']?>/notificacoes/chat.png"};
+	var icones = {ok:"<?=$urls?>/notificacoes/ok.png", novo:"<?=$urls?>/notificacoes/chat.png"};
 	var carregado = false;
 	function notificar(texto,icone,titulo,url) {
 		var options = {
@@ -18,7 +19,7 @@ $(document).ready(function() {
 		}
 		var n = new Notification(titulo,options);
 		$("#audio-notificacao").remove();
-		$("body").append('<audio autoplay id="audio-notificacao"><source src="<?=$rl['value']?>/notificacoes/notificacao.mp3" type="audio/mpeg"></audio>');
+		$("body").append('<audio autoplay id="audio-notificacao"><source src="<?=$urls?>/notificacoes/notificacao.mp3" type="audio/mpeg"></audio>');
 		setTimeout(n.close.bind(n), 5000);
 		$('.bottom-left').notify({
 			message: {text: texto},
@@ -41,7 +42,7 @@ $(document).ready(function() {
 	setInterval(function(){
 		if(carregado === true)
 		{
-			$.get("<?=$rl['value']?>notificacoes.php?u=<?=$_GET['u']?>&e=<?=$_GET['e']?>", function(data) {
+			$.get("<?=$urls?>notificacoes.php?u=<?=$_GET['u']?>&e=<?=$_GET['e']?>", function(data) {
 				for (i = 0; i < data.length; i++) {
 					notificar(data[i].texto, icones[data[i].icone], data[i].titulo, data[i].url);
 				}
