@@ -22,7 +22,7 @@
 				{
 					$ql = $db->query("SELECT value FROM tblconfiguration WHERE setting='SystemURL' LIMIT 1;");
 					$rl = $ql->fetch();
-					$urls = $rl['value'];
+					$urls = str_replace("http:", "", str_replace("https:", "", $rl['value']));
 					if(isset($_SESSION['tckid'][$rt['id']]))
 					{
 						if($_SESSION['tckid'][$rt['id']] != $rt['lastreply'])
