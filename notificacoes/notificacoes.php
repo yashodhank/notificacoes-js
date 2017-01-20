@@ -1,6 +1,6 @@
 <?php
-	require_once "../configuration.php";
-	require("pdo.php");
+	include("pdo.php");
+	include("../configuration.php");
 	$db = Database::conectar($db_host,$db_username,$db_password,$db_name);
 	$ql = $db->query("SELECT value FROM tblconfiguration WHERE setting='SystemURL' LIMIT 1;");
 	$rl = $ql->fetch();
