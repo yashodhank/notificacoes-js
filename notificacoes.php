@@ -1,10 +1,11 @@
 <?php
-	require_once(dirname(__FILE__).'/configuration.php');
+	include("notificacoes/pdo.php");
+	include("configuration.php");
+	$db = Database::conectar($db_host,$db_username,$db_password,$db_name);
 	header('Content-Type: application/json; charset=utf-8');
-	require("notificacoes/pdo.php");
 	if(isset($_GET['u']))
 	{
-		require(dirname(__FILE__).'/notificacoes/pdo.php');
+
 		session_start();
 		if(!isset($_SESSION['tckid']))
 		{
@@ -27,7 +28,7 @@
 					{
 						if($_SESSION['tckid'][$rt['id']] != $rt['lastreply'])
 						{
-							$resultado[count($resultado)] = array('texto' => 'O ticket '.$rt['title'].' foi respondido.', 'icone' => 'novo', 'titulo' => 'Nova resposta', 'url' => ''.$urls.'/viewticket.php?tid='.$rt['tid'].'&c='.$rt['c']);
+							$resultado[count($resultado)] = array('texto' => 'O ticket '.$rt['title'].' foi respondido.', 'icone' => 'novo', 'titulo' => 'Nova resposta', 'url' => ''.$urls.'viewticket.php?tid='.$rt['tid'].'&c='.$rt['c']);
 							$_SESSION['tckid'][$rt['id']] = $rt['lastreply'];
 						}
 					}
